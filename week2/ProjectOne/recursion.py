@@ -5,6 +5,7 @@ def loop1():
         if (i % 2) == 1:
             odd_sum += i
     return odd_sum
+    print(odd_sum)
 
 def loop2():
     # Sum the even numbers between 1 and 20
@@ -15,25 +16,46 @@ def loop2():
             even_sum += i
         i += 1
     return even_sum
+    print(even_sum)
 
 def loop1Rec(num = 0,odd_sum = 0):
     # Duplicate the loop1 function using recursion
-    # if num < 20 
-    #    then check if its odd,
-            # return(loop1Rec(num+1, odd_sum + num))
-        # otherwise
-            # return(loop1Rec(num+1, odd_sum))
-    # otherwise 
-    #   return odd_sum
+    print(num)
+    if num < 20:
+        # then check if its odd,
+        if num % 2 == 0: 
+            return(loop1Rec(num+1, odd_sum + num))
+        else:
+            return(loop1Rec(num+1, odd_sum))
+    else: 
+      return odd_sum
+      print( odd_sum)
+loop1Rec(0)
     
 
 def loop2Rec(num = 0,even_sum = 0):
     # Duplicate the loop2 function using recursion
-    # if num < 20 
-    #    then check if its even,
-            # return(loop1Rec(num+1, even_sum + num))
-        # otherwise
-            # return(loop1Rec(num+1, even_sum))
-    # otherwise 
-    #   return even_sum
+    if num < 20: 
+        # then check if its even,
+        if num % 2 == 0: 
+            return(loop1Rec(num+1, even_sum + num))
+        else:
+            return(loop1Rec(num+1, even_sum))
+    else: 
+        return even_sum
+        print(even_sum)
+loop2Rec(0)
 
+
+
+
+
+
+
+
+#     print(num)
+#     if num == 0:
+#         return
+#     else:
+#         loop1Rec(num-1, odd_sum)
+# loop1Rec(20)

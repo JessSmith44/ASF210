@@ -39,7 +39,7 @@ class DoublyLinkedList:
             self.head.prev = newNode
             newNode.next = self.head
             self.head = newNode
-        words.addFirst(firstItem)
+        # words.addFirst(firstItem)
         print(words)
 
     def addLast(self, data) -> None:
@@ -187,8 +187,7 @@ class DoublyLinkedList:
         return myStr
 
 words = DoublyLinkedList()
-words.addFirst('May', 'the', 'force', 'be', 'with', 'you', '!')
+words.add(data=['May', 'the', 'force', 'be', 'with', 'you', '!'])
 print(words)
-lastItem = input("Please enter item to be stored at the end of the list:\n")
-firstItem = input("Please enter first item:\n")
 
+print(words.indexOf('with'))

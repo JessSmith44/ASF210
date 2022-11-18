@@ -25,9 +25,8 @@ class DoublyLinkedList:
         # Returns the number of elements in the list
         return self.count
 
-
-################
-
+# I did get help with setting up these functions with research and attempting to understand
+# all the different areas of this assignement. 
 
     def addFirst(self, data) -> None:
         # Add a node at the front of the list
@@ -89,7 +88,6 @@ class DoublyLinkedList:
         temp = self.head
         found = 0
         i = 0
-
         if(temp != None):
             while(temp != None):
                 
@@ -104,10 +102,6 @@ class DoublyLinkedList:
                 print(data, "is not found in the list.")
         else:
             print("The list is empty.")
-
-
-################
-
 
     def add(self, data) -> None:
         # Append an item to the end of the list

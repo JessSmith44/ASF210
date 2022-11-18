@@ -92,13 +92,14 @@ class DoublyLinkedList:
 
         if(temp != None):
             while(temp != None):
-                i +=1
+                
                 if(temp.data == data):
                     found +=1
                     break
                 temp = temp.next
+                i +=1
             if(found == 1):
-                print(data, "is found at index =", i)
+                print(i)
             else:
                 print(data, "is not found in the list.")
         else:
@@ -187,7 +188,23 @@ class DoublyLinkedList:
         return myStr
 
 words = DoublyLinkedList()
-words.add(data=['May', 'the', 'force', 'be', 'with', 'you', '!'])
+words.add(data='May') 
+words.add(data='the')
+words.add(data='force')
+words.add(data='be')
+words.add(data='with')
+words.add(data='you')
+words.add(data='!')
+
 print(words)
 
-print(words.indexOf('with'))
+words.indexOf('with')
+
+words.delete('you')
+words.addAtIndex('us', 6)
+words.delete('!')
+words.addAtIndex('all', 7)
+words.addAtIndex('!', 8)
+print(words)
+
+# add "all" before "!"

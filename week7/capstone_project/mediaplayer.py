@@ -1,4 +1,5 @@
 import random
+import itertools
 
 class Song:
     def __init__(self,title,artist):
@@ -35,9 +36,26 @@ playlist = [
     'Chrvrches, Clearest Blue',
     'Carrie Underwood, Before He Cheats'
 ]
+# print(playlist.index('Chrvrches, Clearest Blue')) shows index of 5. 
+
+# playlist = {
+#     'artist': 'Dolly Parton', 'song': 'Jolene',
+#     'artist':'Pantera', 'song':'Walk',
+#     'artist':'The Dirty Heads', 'song':'Lay Me Down',
+#     'artist':'Spice Girls', 'song':'Wannabe',
+#     'artist':'Purity Ring', 'song':'Asido',
+#     'artist':'Chrvrches', 'song':' Clearest Blue',
+#     'artist':'Carrie Underwood', 'song':' Before He Cheats'
+# }
 
 def quickSort(list):
     playlist.sort()
+    
+    # sortedSong = sorted(playlist.keys(), key=lambda x:x.lower())
+    # for i in sortedSong:
+    #     values=playlist[i]
+    # print(values)
+
     # music = playlist(quickSort(playlist))
     # if not list:
     #     return[]
@@ -59,16 +77,8 @@ def menu():
     print("0. Exit")
     print(47 * "-")
 
-# playlist = [
-#     'Dolly Parton, Jolene',
-#     'Pantera, Walk',
-#     'The Dirty Heads, Lay Me Down',
-#     'Spice Girls, Wannabe',
-#     'Purity Ring, Asido',
-#     'Chrvrches, Clearest Blue',
-#     'Carrie Underwood, Before He Cheats'
-# ]
-length = 1
+length = 20
+currSong = []
 
 while True:
     menu()
@@ -80,9 +90,8 @@ while True:
         song = input('and song title: ')
         Song(artist, song)
 
-        for x in range(length):
-            plSong = artist + ", " + song
-            playlist.append(plSong)
+        plSong = artist + ", " + song
+        playlist.append(plSong)
         print(playlist)
 
         print("New Song Added to Playlist")
@@ -93,40 +102,55 @@ while True:
         currSel = artist + ", " + song
         # remove song from playlist
         playlist.remove(currSel)
-        print(playlist)
+        
         print("Song Removed to Playlist")
+        print('Your new playlist is: ', playlist)
     elif choice == 3:
         # Play the playlist from the beginning
         # start at index 0 
-        currSong = playlist[2]
+        playing = playlist[0]
+        currSong.append(playing)
         # print current
         # Display song name that is currently playing
         print("Playing....")        
         print(currSong)
+        # index = playlist.index(currSong)
+        # print("at index: ", index)
     elif choice == 4:
         # Skip to the next song on the playlist
-
+        # played = []
         for index, elem in enumerate(playlist):
             if (index+1 < len(playlist)):
                 currSong = str(elem)
                 nextSong = str(playlist[index+1])
-
-                print(nextSong)
-
+                break
+            currSong.append(nextSong)
+            # print(currSong)
+            index = playlist.index(currSong)
+            print("at index: ", index)
         # Display song name that is now playing
-        print("Skipping....")                     
+        print("Skipping....")   
+        print(nextSong) 
+
     elif choice == 5:
         # Go back to the previous song on the playlist
 
-        for index, elem in enumerate(playlist):
-            if (index-1 >= 0):
-                prevSong = str(playlist[index-1])
+        # played = []
 
-                print(prevSong)
-        # same as 4 but opposite
+        # for index, elem in enumerate(playlist):
+        #     if (index+1 < len(playlist)):
+        #         currSong = str(elem)
+        #         nextSong = str(playlist[index+1])
+        #         played.append(currSong)
+        #         print(played)
+        #         break
+
+        l_iter = iter(playlist)
+        print(next(l_iter))
 
         # Display song name that is now playing
-        print("Replaying....")  
+        print("Replaying....") 
+        # print(nextSong) 
     elif choice == 6:
         # Randomly shuffle the playlist and play the first song
 
@@ -138,7 +162,9 @@ while True:
 
     elif choice == 7:
         # Display the song name and artist of the currently playing song
+
         print("Currently playing: ", end=" ")    
+        print(currSong)
     elif choice == 8:
         # Show the current song list order
         print("\nSong list:\n")
@@ -149,4 +175,3 @@ while True:
 
 # Show Currently Playing Song
 
-# Test your code to ensure that all of the menu options are working as expected.

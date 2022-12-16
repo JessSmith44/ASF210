@@ -1,8 +1,8 @@
-import random
+from random import randint 
 import itertools
 
 class Song:
-    def __init__(self,title,artist):
+    def __init__(self,artist,title):
         self.title = title
         self.artist = artist
 
@@ -27,42 +27,52 @@ class Song:
     def __gt__(self, other):
         return ((self.title, self.artist) < (other.title, other.artist))
 
-playlist = [
-    'Dolly Parton, Jolene',
-    'Pantera, Walk',
-    'The Dirty Heads, Lay Me Down',
-    'Spice Girls, Wannabe',
-    'Purity Ring, Asido',
-    'Chrvrches, Clearest Blue',
-    'Carrie Underwood, Before He Cheats'
-]
-# print(playlist.index('Chrvrches, Clearest Blue')) shows index of 5. 
 
-# playlist = {
-#     'artist': 'Dolly Parton', 'song': 'Jolene',
-#     'artist':'Pantera', 'song':'Walk',
-#     'artist':'The Dirty Heads', 'song':'Lay Me Down',
-#     'artist':'Spice Girls', 'song':'Wannabe',
-#     'artist':'Purity Ring', 'song':'Asido',
-#     'artist':'Chrvrches', 'song':' Clearest Blue',
-#     'artist':'Carrie Underwood', 'song':' Before He Cheats'
-# }
+class Playlist:
+    def __init__(self):
+        self.songList = []
+        self.currSong = 0
 
-def quickSort(list):
-    playlist.sort()
-    
-    # sortedSong = sorted(playlist.keys(), key=lambda x:x.lower())
-    # for i in sortedSong:
-    #     values=playlist[i]
-    # print(values)
+    def addSong(self, song):
+        self.songList.append(song)
 
-    # music = playlist(quickSort(playlist))
-    # if not list:
-    #     return[]
-    # return(quickSort([x for x in list[1:] if x < list[0]])
-    # + [list[0]] + quickSort(x for x in list[1:] if x >= list[0]))
+    def remove(self, title):
+        variable = None
+        for index in range(0, len(self.songList)):
+            song = self.songList[index]
+            if song.title == title:
+                variable = index
+        if variable is not None:
+            self.songList.pop(variable)
 
-print(quickSort(playlist))
+    def shuffleList(self):
+        s = len(self.songList)
+        for i in range(s):
+            rand = randint(i, s -1)
+            self.songList[i], self.songList[rand] = self.songList[rand], self.songList[i]
+            
+
+
+playlist = Playlist()
+
+playlist.addSong(Song('Dolly Parton', 'Jolene'))
+playlist.addSong(Song('Pantera', 'Walk'))
+playlist.addSong(Song('The Dirty Heads', 'Lay Me Down'))
+playlist.addSong(Song('Spice Girls', 'Wannabe'))
+playlist.addSong(Song('Purity Ring', 'Asido'))
+playlist.addSong(Song('Chrvrches', 'Clearest Blue'))
+playlist.addSong(Song('Carrie Underwood', 'Before He Cheats'))
+
+
+size = len(playlist.songList)
+
+def sort(playlist, size):
+    for s in range(len(playlist)):
+        min_idx = s
+        for i in range(s + 1, size):
+            if playlist[i] < playlist[min_idx]:
+                min_idx = i
+        (playlist.songList[s], playlist.songList[min_idx]) = (playlist.songList[min_idx], playlist.songList[s])
 
 def menu():
     print(20 * "-" , "MENU" , 20 * "-")
@@ -78,7 +88,7 @@ def menu():
     print(47 * "-")
 
 length = 20
-currSong = []
+currSong = 0
 
 while True:
     menu()
@@ -87,91 +97,71 @@ while True:
     if choice == 1:
         # Add code to prompt user for Song Title and Artist Name
         artist = input("Please give an artist: ")
-        song = input('and song title: ')
-        Song(artist, song)
+        title = input('and song title: ')
+        song = Song(artist, title)
 
-        plSong = artist + ", " + song
-        playlist.append(plSong)
-        print(playlist)
+        playlist.addSong(song)
+        # print(playlist)
 
         print("New Song Added to Playlist")
     elif choice == 2:
         # Prompt user for Song Title 
-        artist = input("Please give an artist: ")
-        song = input('and song title:')
-        currSel = artist + ", " + song
-        # remove song from playlist
-        playlist.remove(currSel)
+        song = input('Please give a song title: ')
         
-        print("Song Removed to Playlist")
+        # remove song from playlist
+        playlist.remove(song)
+        
+        print("Song Removed from Playlist")
         print('Your new playlist is: ', playlist)
     elif choice == 3:
         # Play the playlist from the beginning
-        # start at index 0 
-        playing = playlist[0]
-        currSong.append(playing)
-        # print current
         # Display song name that is currently playing
         print("Playing....")        
-        print(currSong)
-        # index = playlist.index(currSong)
-        # print("at index: ", index)
+        print(playlist.songList[playlist.currSong]) 
+        
     elif choice == 4:
         # Skip to the next song on the playlist
-        # played = []
-        for index, elem in enumerate(playlist):
-            if (index+1 < len(playlist)):
-                currSong = str(elem)
-                nextSong = str(playlist[index+1])
-                break
-            currSong.append(nextSong)
-            # print(currSong)
-            index = playlist.index(currSong)
-            print("at index: ", index)
+
+        if playlist.currSong+1 < len(playlist.songList):
+            playlist.currSong = playlist.currSong +1
+        else:
+            playlist.currSong = 0
+
         # Display song name that is now playing
         print("Skipping....")   
-        print(nextSong) 
+        print(playlist.songList[playlist.currSong]) 
 
     elif choice == 5:
         # Go back to the previous song on the playlist
 
-        # played = []
+        if playlist.currSong != 0:
+            playlist.currSong = playlist.currSong -1
+        else:
+            playlist.currSong = len(playlist.songList)-1
 
-        # for index, elem in enumerate(playlist):
-        #     if (index+1 < len(playlist)):
-        #         currSong = str(elem)
-        #         nextSong = str(playlist[index+1])
-        #         played.append(currSong)
-        #         print(played)
-        #         break
-
-        l_iter = iter(playlist)
-        print(next(l_iter))
 
         # Display song name that is now playing
         print("Replaying....") 
-        # print(nextSong) 
-    elif choice == 6:
-        # Randomly shuffle the playlist and play the first song
+        print(playlist.songList[playlist.currSong])  
 
-        shuffleSong = random.choice(playlist)
-        
+    elif choice == 6:
+        # Randomly shuffle the playlist and play the first song    
         # Display song name that is now playing
         print("Shuffling....")          
-        print(shuffleSong)
+        playlist.shuffleList()
 
     elif choice == 7:
         # Display the song name and artist of the currently playing song
 
         print("Currently playing: ", end=" ")    
-        print(currSong)
+        print(playlist.songList[playlist.currSong])
+
     elif choice == 8:
         # Show the current song list order
         print("\nSong list:\n")
-        print(playlist)
+        for song in playlist.songList:
+            print(song.title,' by ', song.artist)
+
     elif choice == 0:
         print("Goodbye.")
         break
-
-# Show Currently Playing Song
-
